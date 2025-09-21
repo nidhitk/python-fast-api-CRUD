@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 
 
-class product(BaseModel):
+class Product(BaseModel):
     id:int
     name:str
     description:str

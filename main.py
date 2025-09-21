@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from models import product
+from models import Product
 from database import Session,engine
 import database_models
 
@@ -12,12 +12,27 @@ def greet():
     # print("welcome nidhi")
     return "welcome nidhi" 
 products=[
-    product(id=1,name="phone",description="budget phone",price=99,quantity=10),
-    product(id=3,name="laptop",description="gaming laptop",price=978,quantity=6),
-    product(id=5,name="pen",description="black pen",price=10,quantity=1),
-    product(id=7,name="book",description="note book",price=30,quantity=5)
+    Product(id=1,name="phone",description="budget phone",price=99,quantity=10),
+    Product(id=3,name="laptop",description="gaming laptop",price=978,quantity=6),
+    Product(id=5,name="pen",description="black pen",price=10,quantity=1),
+    Product(id=7,name="book",description="note book",price=30,quantity=5)
    
 ]
+
+def init_db():
+    db=Session()
+    count=db.query(database_models.Product).count
+    if count==0:
+        for product in products:
+            db.add(database_models.Product(**product.model_dump()))
+        db.commit()  
+
+     
+init_db()
+
+
+
+
 @app.get("/products")
 def get_all_products():
     # db connection
@@ -40,13 +55,13 @@ def get_product_by_id(ids:int):
     return "product not found"
 
 @app.post("/product/")
-def add_product(id:int,product:product):
+def add_product(id:int,product:Product):
     products.append(product)
     return {"product added":product}
 
 
 @app.put("/product")
-def update_product(product:product):
+def update_product(product:Product):
     for i in range(len(products)):
         if products[i].id==id:
             products[i]=product
