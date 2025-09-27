@@ -5,4 +5,4 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 db_url="postgresql://postgres:52200216%40Nidhi@localhost:5432/postgres"
 engine=create_engine(db_url)
-Session=sessionmaker(autocommit=False,autoflush=False,bind=engine)
+session=sessionmaker(autocommit=False,autoflush=False,bind=engine)
