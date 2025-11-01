@@ -18,3 +18,6 @@ class product(BaseModel):
     #     self.price=price
     #     self.quantity=quantity
 
+
+    # for checking the git graph, added a commit in master branch
+
